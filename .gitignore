@@ -1,0 +1,5 @@
+node_modules
+.env
+id.txt
+package-lock.json
+bot_about_me.txt

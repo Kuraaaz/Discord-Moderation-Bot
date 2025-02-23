@@ -1,0 +1,8 @@
+CREATE DATABASE IF NOT EXISTS bot_logs;
+
+USE bot_logs;
+
+CREATE TABLE IF NOT EXISTS startups (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    startup_time DATETIME NOT NULL
+);

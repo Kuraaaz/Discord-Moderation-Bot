@@ -1,0 +1,10 @@
+CREATE DATABASE IF NOT EXISTS evt;
+USE evt;
+CREATE TABLE guilds_join (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    guild_id VARCHAR(255) NOT NULL,
+    guild_name VARCHAR(255) NOT NULL,
+    owner_id VARCHAR(255) NOT NULL,
+    owner_name VARCHAR(255) NOT NULL,
+    join_date DATETIME NOT NULL
+);

@@ -1,0 +1,11 @@
+CREATE DATABASE IF NOT EXISTS evt;
+USE evt;
+
+CREATE TABLE new_members (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id VARCHAR(50) NOT NULL,
+    username VARCHAR(100) NOT NULL,
+    guild_id VARCHAR(50) NOT NULL,
+    guild_name VARCHAR(100) NOT NULL,
+    join_date DATETIME NOT NULL
+);
