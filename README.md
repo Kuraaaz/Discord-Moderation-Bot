@@ -16,14 +16,13 @@ discord-moderation-bot
 ├── src
 │   ├── bot.js               # Main entry point for the bot
 │   ├── commands             # Contains command definitions
-│   │   └── index.js
+│   │   └── all commands
 │   ├── events               # Contains event handlers
-│   │   └── index.js
+│   │   └── all events
 │   ├── database             # Database connection setup
-│   │   └── connection.js
+│   │   └── connection.js (for sql connection)
 │   └── utils                # Utility functions
 │       └── helpers.js
-├── config.json              # Configuration settings
 ├── package.json             # npm configuration file
 ├── .env                     # Environment variables
 └── README.md                # Project documentation
@@ -33,17 +32,17 @@ discord-moderation-bot
 
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/discord-moderation-bot.git
+   git clone https://github.com/Kuraaaz/Discord-Moderation-Bot.git
    ```
 
 2. Navigate to the project directory:
    ```
-   cd discord-moderation-bot
+   cd Discord-Moderation-Bot
    ```
 
 3. Install the dependencies:
    ```
-   npm install
+   npm i
    ```
 
 4. Create a `.env` file in the root directory and add your Discord bot token and MySQL credentials:
@@ -57,7 +56,7 @@ discord-moderation-bot
 
 5. Run the bot:
    ```
-   node src/bot.js
+   node index.js
    ```
 
 ## Usage
