@@ -29,6 +29,18 @@ module.exports = {
                 .setColor('Green');
             message.channel.send({ embeds: [embed] });
 
+            const logChannelId = process.env.LOGS_MODS_CHANNEL;
+            const logChannel = message.guild.channels.cache.get(logChannelId);
+            if (logChannel) {
+                const logEmbed = new EmbedBuilder()
+                .setTitle('Utilisateur rétabli')
+                .setDescription(`${member.user.tag} a été rétabli.`)
+                .setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL() })
+                .setFooter({ text: message.guild.name, iconURL: message.guild.iconURL() })
+                .setColor('Green');
+            logChannel.send({ embeds: [logEmbed] });
+            }
+
             // Remove the timeout information from the database
             const deleteQuery = 'DELETE FROM timeouts WHERE user_id = ?';
             await moderationDb.execute(deleteQuery, [member.id]);

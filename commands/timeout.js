@@ -36,6 +36,18 @@ module.exports = {
             .setColor('Red');
         message.channel.send({ embeds: [embed] });
 
+        const logChannelId = process.env.LOGS_MODS_CHANNEL;
+        const logChannel = message.guild.channels.cache.get(logChannelId);
+            if (logChannel) {
+                const logEmbed = new EmbedBuilder()
+                .setTitle('Utilisateur rendu muet')
+                .setDescription(`${member} a été rendu muet pour ${durationString}.`)
+                .setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL() })
+                .setFooter({ text: message.guild.name, iconURL: message.guild.iconURL() })
+                .setColor('Red');
+            logChannel.send({ embeds: [logEmbed] });
+            }
+
         // Store the timeout information in the database
         const query = 'INSERT INTO timeouts (user_id, username, guild_id, timeout_time, timeout_duration) VALUES (?, ?, ?, ?, ?)';
         try {

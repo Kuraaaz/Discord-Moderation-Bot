@@ -64,6 +64,18 @@ module.exports = {
                 .setColor('Red');
             message.channel.send({ embeds: [embed] });
 
+            const logChannelId = process.env.LOGS_MODS_CHANNEL;
+        const logChannel = message.guild.channels.cache.get(logChannelId);
+            if (logChannel) {
+                const logEmbed = new EmbedBuilder()
+                .setTitle('Utilisateur softbanni')
+                .setDescription(`${member.user.tag} a été softbanni du serveur pour ${durationString}.`)
+                .setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL() })
+                .setFooter({ text: message.guild.name, iconURL: message.guild.iconURL() })
+                .setColor('Red');
+            logChannel.send({ embeds: [logEmbed] });
+            }
+
             // Insertion dans la table softbans
             const query = 'INSERT INTO softbans (user_id, username, ban_time, ban_duration, guild_id, guild_name, executor_id, executor_name) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
             await connection.query(query, [member.id, member.user.tag, banTime, duration, message.guild.id, message.guild.name, message.author.id, message.author.tag]);

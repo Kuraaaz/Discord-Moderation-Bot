@@ -32,6 +32,18 @@ module.exports = {
                 .setColor('Red');
             message.channel.send({ embeds: [embed] });
 
+            const logChannelId = process.env.LOGS_MODS_CHANNEL;
+        const logChannel = message.guild.channels.cache.get(logChannelId);
+            if (logChannel) {
+                const logEmbed = new EmbedBuilder()
+                .setTitle('Utilisateur banni')
+                .setDescription(`${member.user.tag} a été banni définitivement du serveur.`)
+                .setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL() })
+                .setFooter({ text: message.guild.name, iconURL: message.guild.iconURL() })
+                .setColor('Red');
+            logChannel.send({ embeds: [logEmbed] });
+            }
+
             const banDate = new Date();
 
             // Connexion à la base de données

@@ -67,6 +67,18 @@ module.exports = {
                 .setColor('Green');
             message.channel.send({ embeds: [embed] });
 
+            const logChannelId = process.env.LOGS_MODS_CHANNEL;
+            const logChannel = message.guild.channels.cache.get(logChannelId);
+            if (logChannel) {
+                const logEmbed = new EmbedBuilder()
+                .setTitle('Utilisateur débanni')
+                .setDescription(`${user.tag} a été débanni du serveur.`)
+                .setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL() })
+                .setFooter({ text: message.guild.name, iconURL: message.guild.iconURL() })
+                .setColor('Green');
+            logChannel.send({ embeds: [logEmbed] });
+            }
+
             // Suppression des informations de l'utilisateur dans la table bans
             const deleteBanQuery = 'DELETE FROM bans WHERE user_id = ? AND guild_id = ?';
             await connection.query(deleteBanQuery, [userId, message.guild.id]);

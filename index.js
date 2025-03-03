@@ -1,4 +1,4 @@
-const mysql = require('mysql2'); // Utilise mysql2 au lieu de mysql
+const mysql = require('mysql2'); 
 require('dotenv').config();
 const { Client, GatewayIntentBits } = require('discord.js');
 const commandHandler = require('./Handler/command');
@@ -22,7 +22,8 @@ eventHandler.setupEvents(client);
 
 
 client.login(process.env.TOKEN).then(() => {
-    loadEvents(path.join(__dirname, 'events'));  // Charger les événements après la connexion
-    setupEvents(client);  // Configurer les événements
+    loadEvents(path.join(__dirname, 'events'));
+    setupEvents(client);
+    
   });
   

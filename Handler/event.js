@@ -10,7 +10,7 @@ function loadEvents(dirPath) {
         const fullPath = path.join(dirPath, file.name);
 
         if (file.isDirectory()) {
-            loadEvents(fullPath); // Appelle récursivement le dossier, mais ne relance pas loadEvents au début
+            loadEvents(fullPath);
         } else if (file.name.endsWith('.js')) {
             try {
                 const event = require(fullPath);
@@ -21,7 +21,7 @@ function loadEvents(dirPath) {
                     logger.warn(`Le fichier ${file.name} n'a pas une structure valide.`);
                 }
             } catch (error) {
-                logger.error(`Erreur lors du chargement de ${file.name}:`, error);
+                console.log(`Erreur lors du chargement de ${file.name}:`, error);
             }
         }
     }

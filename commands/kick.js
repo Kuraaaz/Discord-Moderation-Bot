@@ -37,6 +37,25 @@ module.exports = {
             .setColor('Red'); // Utilisation de "Red"
         message.channel.send({ embeds: [embed] });
 
+        const logChannelId = process.env.LOGS_MODS_CHANNEL;
+        const logChannel = message.guild.channels.cache.get(logChannelId);
+            if (logChannel) {
+                const logEmbed = new EmbedBuilder()
+                .setTitle('Utilisateur expulsé')
+                .setDescription(`${member} a été expulsé du serveur.`)
+                .setAuthor({
+                    name: message.author.tag,
+                    iconURL: message.author.displayAvatarURL()
+                })
+                .setFooter({
+                    text: message.guild.name,
+                    iconURL: message.guild.iconURL()
+                })
+                .setColor('Red');
+            logChannel.send({ embeds: [logEmbed] });
+            }
+
+
         const kickDate = new Date();
 
         try {

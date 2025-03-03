@@ -32,7 +32,7 @@ module.exports = {
             }
 
             // Répondre à l'utilisateur pour confirmer l'arrêt
-            await message.reply('Le bot va s\'éteindre...');
+            await message.reply('Le bot va s\'éteindre...', ephemeral = true);
 
             // Mettre le bot en statut hors ligne
             message.client.user.setStatus('invisible');

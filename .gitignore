@@ -3,3 +3,4 @@ node_modules
 id.txt
 package-lock.json
 bot_about_me.txt
+logs.txt

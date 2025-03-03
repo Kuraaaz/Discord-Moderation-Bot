@@ -71,7 +71,7 @@ module.exports = {
 
             // Envoi des informations en DM
             await message.author.send({ embeds: [embed], files: ['logs.txt'] });
-            message.reply('Les informations ont été envoyées en DM.');
+            message.reply('Les logs ont été envoyées en DM.');
 
         } catch (err) {
             logger.error('Erreur dans la commande ls:', err);
