@@ -1,34 +1,34 @@
-const chalk = require("chalk");
 const dayjs = require("dayjs");
+const chalk = require("chalk").default;
 
 const format = "{tstamp} {tag} {txt}\n";
 
 function error(content) {
-  write(content, "black", "bgRed", "ERROR", true);
+  write(content, chalk.black, chalk.bgRed, "ERROR", true);
 }
 
 function warn(content) {
-  write(content, "black", "bgYellow", "WARN", false);
+  write(content, chalk.black, chalk.bgYellow, "WARN", false);
 }
 
 function typo(content) {
-  write(content, "black", "bgCyan", "TYPO", false);
+  write(content, chalk.black, chalk.bgCyan, "TYPO", false);
 }
 
 function command(content) {
-  write(content, "black", "bgMagenta", "CMD", false);
+  write(content, chalk.black, chalk.bgMagenta, "CMD", false);
 }
 
 function event(content) {
-  write(content, "black", "bgGreen", "EVT", true);
+  write(content, chalk.black, chalk.bgGreen, "EVT", true);
 }
 
 function client(content) {
-  write(content, "black", "bgBlue", "CLIENT", false);
+  write(content, chalk.black, chalk.bgBlue, "CLIENT", false);
 }
 
 function info(content) {
-  write(content, "black", "bgBlack", "INFO", false);
+  write(content, chalk.black, chalk.bgBlack, "INFO", false);
 }
 
 function write(content, tagColor, bgTagColor, tag, error = false) {
@@ -38,7 +38,7 @@ function write(content, tagColor, bgTagColor, tag, error = false) {
 
   const item = format
     .replace("{tstamp}", chalk.gray(timestamp))
-    .replace("{tag}", chalk[bgTagColor][tagColor](logTag))
+    .replace("{tag}", bgTagColor(tagColor(logTag)))
     .replace("{txt}", chalk.white(content));
 
   stream.write(item);

@@ -1,4 +1,4 @@
--- Active: 1739624944042@@127.0.0.1@3306
+
 CREATE DATABASE IF NOT EXISTS moderation;
 USE moderation;
 
