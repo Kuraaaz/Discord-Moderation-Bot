@@ -3,13 +3,13 @@ const logger = require('../../utils/Logger');
 const { bot_logs } = require('../../database/connection');
 
 module.exports = {
-    name: 'addwl',
+    name: 'delbl',
     category: 'admin',
     permissions: ['ADMINISTRATOR'],
     ownerOnly: false,
-    usage: 'addwl <@user|user_id>',
-    examples: ['addwl @user', 'addwl 1046834138583412856'],
-    description: 'Ajoute un utilisateur à la whitelist en lui conférant un rôle spécifique.',
+    usage: 'delbl <@user|user_id>',
+    examples: ['delbl @user', 'delbl 1046834138583412856'],
+    description: 'Supprime un utilisateur de la blacklist en lui retirant un rôle spécifique.',
     
     async execute(message, args) {
         if (!args.length) {
@@ -33,20 +33,20 @@ module.exports = {
             }
 
             const embed = new EmbedBuilder()
-                .setTitle('Utilisateur ajouté à la whitelist')
-                .setDescription(`${member.user.tag} a été ajouté à la whitelist.`)
+                .setTitle('Utilisateur retiré de la blacklist')
+                .setDescription(`${member.user.tag} a été retiré de la blacklist.`)
                 .setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL() })
                 .setFooter({ text: message.guild.name, iconURL: message.guild.iconURL() })
-                .setColor('Green');
+                .setColor('Yellow');
             message.channel.send({ embeds: [embed] });
 
-            // Insert the user into the whitelist database
-            await bot_logs.query('INSERT INTO whitelist (user_id, added_by) VALUES (?, ?)', [userId, message.author.id]);
+            // Remove the user from the blacklist database
+            await bot_logs.query('DELETE FROM blacklist WHERE user_id = ?', [userId]);
 
-            logger.info(`Utilisateur ${member.user.tag} ajouté à la whitelist par ${message.author.tag}`);
+            logger.info(`Utilisateur ${member.user.tag} retiré de la blacklist par ${message.author.tag}`);
         } catch (err) {
-            logger.error('Erreur lors de l\'ajout à la whitelist:', err);
-            message.reply('Une erreur est survenue lors de l\'ajout de l\'utilisateur à la whitelist.');
+            logger.error('Erreur lors du retrait de la blacklist:', err);
+            message.reply('Une erreur est survenue lors du retrait de l\'utilisateur de la blacklist.');
         }
     }
 };

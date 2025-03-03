@@ -1,10 +1,11 @@
 const { EmbedBuilder } = require('discord.js');
 const logger = require('../../utils/Logger');
+const { bot_logs } = require('../../database/connection');
 
 module.exports = {
     name: 'addbl',
     category: 'admin',
-    permissions: ['MANAGE_ROLES'],
+    permissions: ['ADMINISTRATOR'],
     ownerOnly: false,
     usage: 'addbl <@user|user_id>',
     examples: ['addbl @user', 'addbl 1046834138583412856'],
@@ -13,12 +14,6 @@ module.exports = {
     async execute(message, args) {
         if (!args.length) {
             return message.reply('Merci de mentionner un utilisateur ou de fournir un identifiant.');
-        }
-
-        const roleId = 'ID_DU_ROLE_BLACKLIST'; // Remplacez par l'ID du rôle de blacklist
-        const role = message.guild.roles.cache.get(roleId);
-        if (!role) {
-            return message.reply('Le rôle de blacklist est introuvable.');
         }
 
         const mentionRegex = /^<@!?(\d+)>$/;
@@ -37,7 +32,6 @@ module.exports = {
                 return message.reply('Utilisateur introuvable.');
             }
 
-            await member.roles.add(role);
             const embed = new EmbedBuilder()
                 .setTitle('Utilisateur ajouté à la blacklist')
                 .setDescription(`${member.user.tag} a été ajouté à la blacklist.`)
@@ -56,6 +50,9 @@ module.exports = {
                     .setTimestamp();
                 logChannel.send({ embeds: [logEmbed] });
             }
+
+            // Insert the user into the blacklist database
+            await bot_logs.query('INSERT INTO blacklist (user_id, added_by) VALUES (?, ?)', [userId, message.author.id]);
 
             logger.info(`Utilisateur ${member.user.tag} ajouté à la blacklist par ${message.author.tag}`);
         } catch (err) {

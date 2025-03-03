@@ -8,7 +8,7 @@ module.exports = {
     async execute(member) {
 
         const channelId = process.env.WELCOME_CHANNEL;
-        const channel = member.guild.channels.cache.get(channelId); // ✅ Correct
+        const channel = member.guild.channels.cache.get(channelId);
 
         if (channel) {
             const embed = new EmbedBuilder()
