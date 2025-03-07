@@ -1,17 +1,22 @@
-const { EmbedBuilder } = require('discord.js');
+const { EmbedBuilder, PermissionsBitField } = require('discord.js');
 const { moderationDb } = require('../database/connection');
 const logger = require('../utils/Logger');
 
 module.exports = {
     name: 'unban',
     category: 'moderation',
-    permissions: ['BAN_MEMBERS'],
+    permissions: [PermissionsBitField.Flags.BanMembers],
     ownerOnly: false,
     usage: 'unban <@user|user_id>',
     examples: ['unban @user', 'unban 1046834138583412856'],
     description: 'Débanni un utilisateur du serveur et supprime ses données des tables "bans" et "softbans".',
     
     async execute(message, args) {
+
+        if (!message.member.permissions.has(PermissionsBitField.Flags.BanMembers)) {
+            return message.reply('Vous n\'avez pas la permission d\'utiliser cette commande.');
+        }
+
         // Vérifier que l'argument est fourni (mention ou identifiant)
         if (!args.length) {
             return message.reply('Merci de fournir la mention ou l\'ID d\'un utilisateur à débannir.');

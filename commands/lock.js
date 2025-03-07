@@ -5,7 +5,7 @@ dotenv.config();
 module.exports = {
     name: 'lock',
     category: 'moderation',
-    permissions: ['MANAGE_CHANNELS'],
+    permissions: [PermissionsBitField.Flags.ManageChannels],
     ownerOnly: false,
     usage: 'lock',
     examples: ['lock'],

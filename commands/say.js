@@ -1,16 +1,22 @@
+const { PermissionsBitField } = require('discord.js');
 const { moderationDb } = require('../database/connection');
 const logger = require('../utils/Logger');
 
 module.exports = {
     name: 'say',
     category: 'utility',
-    permissions: ['MANAGE_MESSAGES'],
+    permissions: [PermissionsBitField.Flags.SendMessages],
     ownerOnly: false,
     usage: 'say <message>',
     examples: ['say il fait beau aujourd\'hui'],
     description: 'Le bot envoie un message avec le contenu spécifié et supprime le message de l\'utilisateur.',
     
     async execute(message, args) {
+
+        if (!message.member.permissions.has(PermissionsBitField.Flags.SendMessages)) {
+            return message.reply('Vous n\'avez pas la permission d\'envoyer des messages.');
+        }
+
         const sayMessage = args.join(' ');
         if (!sayMessage) {
             return message.reply('Merci de spécifier un message à envoyer.');

@@ -24,7 +24,7 @@ function loadCommands(dirPath) {
                     logger.warn(`Le fichier ${file.name} n'a pas de propriété "name" ou "execute" valide.`);
                 }
             } catch (error) {
-                logger.error(`Erreur lors du chargement de ${file.name}:`, error);
+                console.log(`Erreur lors du chargement de ${file.name}:`, error);
             }
         }
     }

@@ -1,7 +1,0 @@
-- First of all you'll have to install all the dependencies by using "npm i" or "npm install"
-
-- After that you'll have to download manually MySQL for using the current databases which are created progressively while the bot run.
-
-- Check the .env file and edit all your own settings
-
-- Once you got verified all thoses steps you can try to launch your product !

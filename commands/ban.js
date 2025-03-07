@@ -1,17 +1,22 @@
-const { EmbedBuilder } = require('discord.js');
+const { EmbedBuilder, PermissionsBitField } = require('discord.js');
 const { moderationDb } = require('../database/connection');
 const logger = require('../utils/Logger');
 
 module.exports = {
     name: 'ban',
     category: 'moderation',
-    permissions: ['BAN_MEMBERS'],
+    permissions: [PermissionsBitField.Flags.BanMembers],
     ownerOnly: false,
     usage: 'ban <@user>',
     examples: ['ban @user'],
     description: 'Banni un membre du serveur.',
     
     async execute(message, args) {
+
+        if (!message.member.permissions.has(PermissionsBitField.Flags.BanMembers)) {
+            return message.reply('Vous n\'avez pas la permission d\'utiliser cette commande.');
+        }
+
         if (!message.mentions.members.size) {
             return message.reply('Merci de mentionner un utilisateur à bannir.');
         }

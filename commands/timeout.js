@@ -1,17 +1,22 @@
-const { EmbedBuilder } = require('discord.js');
+const { EmbedBuilder, PermissionsBitField } = require('discord.js');
 const { moderationDb } = require('../database/connection'); // Assurez-vous d'importer correctement
 const logger = require('../utils/Logger');
 
 module.exports = {
     name: 'timeout',
     category: 'moderation',
-    permissions: ['MODERATE_MEMBERS'],
+    permissions: [PermissionsBitField.Flags.ManageRoles],
     ownerOnly: false,
     usage: 'timeout <@user> <duration>',
     examples: ['timeout @user 10m', 'timeout @user 1h', 'timeout @user 7d'],
     description: 'Timeout a member for a specified duration',
     
     async execute(message, args) {
+
+        if (!message.member.permissions.has(PermissionsBitField.Flags.ManageRoles)) {
+            return message.reply('Vous n\'avez pas la permission d\'utiliser cette commande.');
+        }
+
         if (!message.mentions.members.size) {
             return message.reply('Merci de mentionner un utilisateur à rendre muet.');
         }

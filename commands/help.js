@@ -1,17 +1,22 @@
-const { EmbedBuilder } = require('discord.js');
+const { EmbedBuilder, PermissionsBitField } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
 
 module.exports = {
     name: 'help',
     category: 'utility',
-    permissions: ['SEND_MESSAGES'],
+    permissions: [PermissionsBitField.Flags.SendMessages],
     ownerOnly: false,
     usage: 'help',
     examples: ['help'],
     description: 'Affiche la liste de toutes les commandes disponibles.',
     
     async execute(message, args) {
+
+        if (!message.member.permissions.has(PermissionsBitField.Flags.SendMessages)) {
+            return message.reply('Vous n\'avez pas la permission d\'envoyer des messages.');
+        }
+
         try {
             // Charger les commandes depuis le dossier 'commands'
             const commandFiles = fs.readdirSync(path.join(__dirname, '..', 'commands'))

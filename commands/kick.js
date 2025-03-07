@@ -1,17 +1,22 @@
-const { MessageEmbed, EmbedBuilder } = require('discord.js');
+const { PermissionsBitField, EmbedBuilder } = require('discord.js');
 const { moderationDb } = require('../database/connection');
 const logger = require('../utils/Logger');
 
 module.exports = {
     name: 'kick',
     category: 'moderation',
-    permissions: ['KICK_MEMBERS'],
+    permissions: [PermissionsBitField.Flags.KickMembers],
     ownerOnly: false,
     usage: 'kick <@user>',
     examples: ['kick @user'],
     description: 'Kick a member from the server',
     
     async execute(message, args) {
+
+        if (!message.member.permissions.has(PermissionsBitField.Flags.KickMembers)) {
+            return message.reply('Vous n\'avez pas la permission d\'utiliser cette commande.');
+        }
+
         if (!message.mentions.members.size) {
             return message.reply('Merci de mentionner un utilisateur à expulser.');
         }

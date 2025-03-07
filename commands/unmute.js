@@ -1,17 +1,22 @@
-const { EmbedBuilder } = require('discord.js');
+const { EmbedBuilder, PermissionsBitField } = require('discord.js');
 const { moderationDb } = require('../database/connection');
 const logger = require('../utils/Logger');
 
 module.exports = {
     name: 'unmute',
     category: 'moderation',
-    permissions: ['MODERATE_MEMBERS'],
+    permissions: [PermissionsBitField.Flags.ManageRoles],
     ownerOnly: false,
     usage: 'unmute <@user>',
     examples: ['unmute @user'],
     description: 'Unmute a member and remove them from the timeout database',
     
     async execute(message, args) {
+
+        if (!message.member.permissions.has(PermissionsBitField.Flags.ManageRoles)) {
+            return message.reply('Vous n\'avez pas la permission d\'utiliser cette commande.');
+        }
+
         if (!message.mentions.members.size) {
             return message.reply('Merci de mentionner un utilisateur à rétablir.');
         }

@@ -1,16 +1,21 @@
-const { EmbedBuilder } = require("discord.js");
+const { EmbedBuilder, PermissionsBitField } = require("discord.js");
 const logger = require('../utils/Logger');
 
 module.exports = {
   name: "ping",
   category: "utils",
-  permissions: ["SEND_MESSAGES"],
+  permissions: [PermissionsBitField.Flags.SendMessages],
   ownerOnly: false,
   usage: "ping",
   examples: ["ping"],
   description: "La commande ping renvoie la latence du bot et de l'API",
   
   async execute(message, args) {
+
+    if (!message.member.permissions.has(PermissionsBitField.Flags.SendMessages)) {
+      return message.reply("Vous n'avez pas la permission d'envoyer des messages.");
+    }
+
     const tryPong = await message.reply("On essaye de pong... un instant!");
 
     const embed = new EmbedBuilder()

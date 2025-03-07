@@ -5,7 +5,7 @@ dotenv.config();
 module.exports = {
     name: 'unlock',
     category: 'moderation',
-    permissions: ['MANAGE_CHANNELS'],
+    permissions: [PermissionsBitField.Flags.ManageChannels],
     ownerOnly: false,
     usage: 'unlock',
     examples: ['unlock'],

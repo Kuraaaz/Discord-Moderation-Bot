@@ -1,10 +1,11 @@
-const { moderationDb } = require('../database/connection'); // Assurez-vous d'importer le pool correctement
+const { PermissionsBitField } = require('discord.js');
+const { moderationDb } = require('../database/connection');
 const logger = require('../utils/Logger');
 
 module.exports = {
     name: 'clear',
     category: 'moderation',
-    permissions: ['MANAGE_MESSAGES'],
+    permissions: [PermissionsBitField.Flags.ManageMessages],
     ownerOnly: false,
     usage: 'clear <number>',
     examples: ['clear 10'],
@@ -13,7 +14,7 @@ module.exports = {
     async execute(message, args) {
         const amount = parseInt(args[0], 10);
 
-        if (!message.member.permissions.has('MANAGE_MESSAGES')) {
+        if (!message.member.permissions.has(PermissionsBitField.Flags.ManageMessages)) {
             return message.reply('Vous ne disposez pas de la permission pour supprimer des messages.');
         }
 

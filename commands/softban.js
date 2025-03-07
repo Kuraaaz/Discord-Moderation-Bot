@@ -1,17 +1,22 @@
-const { EmbedBuilder } = require('discord.js');
+const { EmbedBuilder, PermissionsBitField } = require('discord.js');
 const { moderationDb } = require('../database/connection');
 const logger = require('../utils/Logger');
 
 module.exports = {
     name: 'softban',
     category: 'moderation',
-    permissions: ['BAN_MEMBERS'],
+    permissions: [PermissionsBitField.Flags.BanMembers],
     ownerOnly: false,
     usage: 'softban <@user|user_id> <duration>',
     examples: ['softban @user 1h', 'softban 1046834138583412856 2d'],
     description: 'Softban un utilisateur pour un temps spécifié.',
     
     async execute(message, args) {
+
+        if (!message.member.permissions.has(PermissionsBitField.Flags.BanMembers)) {
+            return message.reply('Vous n\'avez pas la permission d\'utiliser cette commande.');
+        }
+
         if (!args[0]) {
             return message.reply('Merci de spécifier un utilisateur à softban.');
         }
